@@ -1,15 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<!DOCTYPE html>
  
-@*<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Bookshop</title>
-</head>
-<body>*@
 <div>
     <h3>Available books</h3>
     <table>
@@ -22,14 +14,13 @@
         @foreach (var b in ViewBag.Books)
         {
             <tr>
-                <td><p>@b.book_name</p></td>
-                <td><p>@b.Author.first_name @b.Author.last_name</p></td>
+                <td class="info"><p><a href="/Home/EditBook/@b.book_id" class="infoLink">@b.book_name</a></p></td>
+                <td class="info"><p>@b.Author.first_name @b.Author.last_name</p></td>
                 <td><p>@b.available_count</p></td>
                 <td><p>@b.price</p></td>
-                <td><p><a href="/Home/Buy/@b.book_id">Buy</a></p></td>
+                <td><p><a href="/Home/Buy/@b.book_id">Make a purchase</a></p></td>
             </tr>
         }
     </table>
+    <p>@ViewBag.ErrorMessage</p>
 </div>
-@*</body>
-</html>*@

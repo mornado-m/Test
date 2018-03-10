@@ -18,11 +18,11 @@
     <Property Name="book_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="book_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="author_id" Type="Int32" Nullable="false" />
-    <Property Name="decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="available_count" Type="Int32" Nullable="false" />
     <Property Name="price" Type="Double" Nullable="false" />
     <NavigationProperty Name="Author" Relationship="Self.FK_book_author" FromRole="Books" ToRole="Authors" />
     <NavigationProperty Name="Sales" Relationship="Self.FK_sale_book" FromRole="Books" ToRole="Sales" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Sale">
     <Key>

@@ -23,9 +23,9 @@ namespace ASP_Test.Models
         public int book_id { get; set; }
         public string book_name { get; set; }
         public int author_id { get; set; }
-        public string decription { get; set; }
         public int available_count { get; set; }
         public double price { get; set; }
+        public string description { get; set; }
     
         public virtual Author Author { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

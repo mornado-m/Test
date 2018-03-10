@@ -15,10 +15,10 @@
     <EntitySetMapping Name="Books">
       <EntityTypeMapping TypeName="Bookshop_DBModel.Book">
         <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="book_id" ColumnName="book_id" />
           <ScalarProperty Name="book_name" ColumnName="book_name" />
           <ScalarProperty Name="author_id" ColumnName="author_id" />
-          <ScalarProperty Name="decription" ColumnName="decription" />
           <ScalarProperty Name="available_count" ColumnName="available_count" />
           <ScalarProperty Name="price" ColumnName="price" />
         </MappingFragment>

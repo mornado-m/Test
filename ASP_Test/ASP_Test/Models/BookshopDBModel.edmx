@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Bookshop_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Bookshop_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Authors">
           <Key>
             <PropertyRef Name="author_id" />
@@ -22,7 +22,7 @@
           <Property Name="book_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="book_name" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="author_id" Type="int" Nullable="false" />
-          <Property Name="decription" Type="nvarchar(max)" />
+          <Property Name="description" Type="nvarchar(max)" />
           <Property Name="available_count" Type="int" Nullable="false" />
           <Property Name="price" Type="float" Nullable="false" />
         </EntityType>
@@ -73,8 +73,7 @@
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Bookshop_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -96,11 +95,11 @@
           <Property Name="book_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="book_name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="author_id" Type="Int32" Nullable="false" />
-          <Property Name="decription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="available_count" Type="Int32" Nullable="false" />
           <Property Name="price" Type="Double" Nullable="false" />
           <NavigationProperty Name="Author" Relationship="Self.FK_book_author" FromRole="Books" ToRole="Authors" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_sale_book" FromRole="Books" ToRole="Sales" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -170,10 +169,10 @@
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="Bookshop_DBModel.Book">
               <MappingFragment StoreEntitySet="Books">
+                <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="book_id" ColumnName="book_id" />
                 <ScalarProperty Name="book_name" ColumnName="book_name" />
                 <ScalarProperty Name="author_id" ColumnName="author_id" />
-                <ScalarProperty Name="decription" ColumnName="decription" />
                 <ScalarProperty Name="available_count" ColumnName="available_count" />
                 <ScalarProperty Name="price" ColumnName="price" />
               </MappingFragment>

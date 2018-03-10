@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Sales";
 }
+
 <div>
     <h3>Sales</h3>
     <table>
@@ -15,14 +16,13 @@
         @foreach (var s in ViewBag.Sales)
         {
             <tr>
-                <td><p>@s.Book.book_name</p></td>
-                <td><p>@s.Book.Author.first_name @s.Book.Author.last_name</p></td>
+                <td class="info"><p>@s.Book.book_name</p></td>
+                <td class="info"><p>@s.Book.Author.first_name @s.Book.Author.last_name</p></td>
                 <td><p>@s.books_count</p></td>
                 <td><p>@s.price</p></td>
                 <td><p>@s.sale_date.ToShortDateString()</p></td>
             </tr>
         }
     </table>
+    <p>@ViewBag.ErrorMessage</p>
 </div>
-
-

@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "EditBook";
+}
+
+<div>
+    <h3>@ViewBag.BookName</h3>
+
+    <form method="post" action="..\EditBook">
+        <p>Author: @ViewBag.Author</p>
+        <input type="hidden" name="book_id" value="@ViewBag.BookId"/>
+        
+        <p>Available count:</p>
+        <input type="number" name="available_count" value="@ViewBag.Count" /><br/><br />
+
+        <p>Price:</p>
+        <input type="text" name="price" value="@ViewBag.Price" /><br/><br />
+
+        <p>Description:</p>
+        <textarea name="description" class="inputInfo">@ViewBag.Description</textarea><br /><br />
+
+        <input type="submit" name="ok" value="OK"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+    </form>
+</div>
+
+

@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Buy";
+}
+
+<div>
+    <h3>Make a purchase</h3>
+    <form method="post" action="">
+        <input type="hidden" value="@ViewBag.BookId" name="book_id" />
+        <p>Input client name:</p>
+        <input type="text" /><br /><br />
+        <p>Input client address:</p>
+        <input type="text" /><br /><br />
+        <p>Chose book count:</p>
+        <input type="number" name="books_count"/><br/><br />
+        <input type="submit" value="Make a purchase"/>
+    </form>
+</div>

@@ -13,12 +13,13 @@
         @foreach (var a in ViewBag.Authors)
         {
             <tr>
-                <td><p>@a.first_name @a.last_name</p></td>
+                <td class="info"><a href="/Home/EditAuthor/@a.author_id" class="infoLink"><p>@a.first_name @a.last_name</p></a></td>
                 <td><p>@a.DOB.ToShortDateString()</p></td>
-                <td><p>@a.info</p></td>
+                <td class="info"><p>@a.info</p></td>
             </tr>
         }
     </table>
+    <p>@ViewBag.ErrorMessage</p>
 </div>
 
 

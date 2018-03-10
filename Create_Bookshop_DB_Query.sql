@@ -17,7 +17,7 @@ CREATE TABLE Books
 (book_id INT IDENTITY(1, 1) NOT NULL,
 book_name NVARCHAR(256) NOT NULL,
 author_id INT NOT NULL,
-decription NVARCHAR(MAX) NULL,
+[description] NVARCHAR(MAX) NULL,
 available_count INT NOT NULL,
 price FLOAT NOT NULL,
 CONSTRAINT PK_BooksID PRIMARY KEY (book_id),
