@@ -267,55 +267,108 @@ namespace ASP_Test.Controllers
             return Redirect("Authors");
         }
 
-
+        [HttpGet]
         public ActionResult DeleteBook(int id)
         {
+            ViewBag.BookId = id;
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    var sales = dbContext.Sales.Where(sale => sale.book_id == id);
-                    foreach (var sale in sales)
-                        dbContext.Sales.Remove(sale);
-
                     var book = dbContext.Books.First(b => b.book_id == id);
-                    dbContext.Books.Remove(book);
-
-                    dbContext.SaveChanges();
+                    ViewBag.BookName = book.book_name;
                 }
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e);
-                throw;
+                ViewBag.ErrorMessage = e.Message;
+                return View("ConfirmDeleteBook");
             }
+
+            ViewBag.ErrorMessage = "";
+            return View("ConfirmDeleteBook");
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmDeleteBook(int id)
+        {
+            if (Request.Form["ok"] != null)
+            {
+                try
+                {
+                    using (var dbContext = new Bookshop_DBContext())
+                    {
+                        var sales = dbContext.Sales.Where(sale => sale.book_id == id);
+                        foreach (var sale in sales)
+                            dbContext.Sales.Remove(sale);
+
+                        var book = dbContext.Books.First(b => b.book_id == id);
+                        dbContext.Books.Remove(book);
+
+                        dbContext.SaveChanges();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
             return Redirect("Index");
         }
 
+
+        [HttpGet]
         public ActionResult DeleteAuthor(int id)
         {
+            ViewBag.AuthorId = id;
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    var sales = dbContext.Sales.Where(sale => sale.Book.author_id == id);
-                    foreach (var sale in sales)
-                        dbContext.Sales.Remove(sale);
-
-                    var books = dbContext.Books.Where(b => b.author_id == id);
-                    foreach (var book in books)
-                        dbContext.Books.Remove(book);
-
                     var author = dbContext.Authors.First(a => a.author_id == id);
-                    dbContext.Authors.Remove(author);
-
-                    dbContext.SaveChanges();
+                    ViewBag.AuthorName = author.first_name + " " + author.last_name;
                 }
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e);
-                throw;
+                ViewBag.ErrorMessage = e.Message;
+                return View("ConfirmDeleteAuthor");
+            }
+
+            ViewBag.ErrorMessage = "";
+            return View("ConfirmDeleteAuthor");
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmDeleteAuthor(int id)
+        {
+            if (Request.Form["ok"] != null)
+            {
+                try
+                {
+                    using (var dbContext = new Bookshop_DBContext())
+                    {
+                        var sales = dbContext.Sales.Where(sale => sale.Book.author_id == id);
+                        foreach (var sale in sales)
+                            dbContext.Sales.Remove(sale);
+
+                        var books = dbContext.Books.Where(b => b.author_id == id);
+                        foreach (var book in books)
+                            dbContext.Books.Remove(book);
+
+                        var author = dbContext.Authors.First(a => a.author_id == id);
+                        dbContext.Authors.Remove(author);
+
+                        dbContext.SaveChanges();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
 
             return Redirect("Authors");

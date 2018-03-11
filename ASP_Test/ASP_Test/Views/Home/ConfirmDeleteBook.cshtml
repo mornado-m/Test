@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmDeleteBook";
+}
+
+<div>
+    <h3>Remove this book?</h3>
+    <p>@ViewBag.ErrorMessage</p>
+    <form method="post" action="..\ConfirmDeleteBook">
+        @if (ViewBag.ErrorMessage.Equals(""))
+        {
+            <input type="hidden" value="@ViewBag.BookId" name="id" />
+            <p>Do you want to remove @ViewBag.BookName, and all book's sales?</p>
+            <input type="submit" name="ok" value="OK" />
+            <input type="submit" name="cancel" value="Cancel" />
+        }
+    </form>
+</div>
+
