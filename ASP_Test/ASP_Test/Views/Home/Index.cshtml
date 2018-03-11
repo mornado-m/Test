@@ -10,6 +10,7 @@
             <td><p>Available Count</p></td>
             <td><p>Price</p></td>
             <td></td>
+            <td></td>
         </tr>
         @foreach (var b in ViewBag.Books)
         {
@@ -19,8 +20,12 @@
                 <td><p>@b.available_count</p></td>
                 <td><p>@b.price</p></td>
                 <td><p><a href="/Home/Buy/@b.book_id">Make a purchase</a></p></td>
+                <td><p><a href="/Home/DeleteBook/@b.book_id">Remove</a></p></td>
             </tr>
         }
     </table>
+    <form method="get" action="/Home/AddBook">
+        <input type="submit" value="Add new book" />
+    </form>
     <p>@ViewBag.ErrorMessage</p>
 </div>

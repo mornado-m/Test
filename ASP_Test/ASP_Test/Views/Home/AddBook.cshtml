@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "AddBook";
+}
+
+<div>
+    <h3>New Book</h3>
+
+    <form method="post" action="">
+        <p>Name:</p>
+        <input type="text" name="book_name" /><br /><br />
+
+        <p>Author:</p>
+        @model ASP_Test.Models.NewBookModel
+        @Html.DropDownListFor(newBook => newBook.author_name, new List<SelectListItem>(ViewBag.Authors))
+        
+        <br /><br />
+        <p>Available count:</p>
+        <input type="number" name="available_count" /><br/><br/>
+
+        <p>Price:</p>
+        <input type="text" name="price" /><br/><br/>
+
+        <p>Description:</p>
+        <textarea name="description" class="inputInfo"></textarea><br/><br/>
+
+        <input type="submit" name="ok" value="OK"/>
+        <input type="submit" name="cancel" value="Cancel"/>
+    </form>
+    <p>@ViewBag.ErrorMessage</p>
+</div>
+
+

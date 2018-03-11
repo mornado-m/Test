@@ -175,6 +175,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookshopDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NewBookModel.cs" />
     <Compile Include="Models\Sale.cs">
       <DependentUpon>BookshopDBModel.tt</DependentUpon>
     </Compile>
@@ -238,6 +239,8 @@
     <Content Include="Views\Home\ConfirmBuy.cshtml" />
     <Content Include="Views\Home\EditBook.cshtml" />
     <Content Include="Views\Home\EditAuthor.cshtml" />
+    <Content Include="Views\Home\AddAuthor.cshtml" />
+    <Content Include="Views\Home\AddBook.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -248,15 +248,163 @@ namespace ASP_Test.Controllers
         {
             if (Request.Form["ok"] != null)
             {
-                using (var dbContext = new Bookshop_DBContext())
+                try
                 {
-                    var author = dbContext.Authors.First(a => a.author_id == auth.author_id);
-                    author.info = auth.info;
-                    dbContext.SaveChanges();
+                    using (var dbContext = new Bookshop_DBContext())
+                    {
+                        var author = dbContext.Authors.First(a => a.author_id == auth.author_id);
+                        author.info = auth.info;
+                        dbContext.SaveChanges();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
                 }
             }
 
             return Redirect("Authors");
+        }
+
+
+        public ActionResult DeleteBook(int id)
+        {
+            try
+            {
+                using (var dbContext = new Bookshop_DBContext())
+                {
+                    var sales = dbContext.Sales.Where(sale => sale.book_id == id);
+                    foreach (var sale in sales)
+                        dbContext.Sales.Remove(sale);
+
+                    var book = dbContext.Books.First(b => b.book_id == id);
+                    dbContext.Books.Remove(book);
+
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return Redirect("Index");
+        }
+
+        public ActionResult DeleteAuthor(int id)
+        {
+            try
+            {
+                using (var dbContext = new Bookshop_DBContext())
+                {
+                    var sales = dbContext.Sales.Where(sale => sale.Book.author_id == id);
+                    foreach (var sale in sales)
+                        dbContext.Sales.Remove(sale);
+
+                    var books = dbContext.Books.Where(b => b.author_id == id);
+                    foreach (var book in books)
+                        dbContext.Books.Remove(book);
+
+                    var author = dbContext.Authors.First(a => a.author_id == id);
+                    dbContext.Authors.Remove(author);
+
+                    dbContext.SaveChanges();
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return Redirect("Authors");
+        }
+
+
+        public ActionResult AddAuthor()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddAuthor(Author author)
+        {
+            if (Request.Form["ok"] != null)
+            {
+                try
+                {
+                    using (var dbContext = new Bookshop_DBContext())
+                    {
+                        dbContext.Authors.Add(author);
+                        dbContext.SaveChanges();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+            return Redirect("Authors");
+        }
+
+
+        public ActionResult AddBook()
+        {
+            try
+            {
+                var authors = new List<SelectListItem>();
+                using (var dbContext = new Bookshop_DBContext())
+                {
+                    dbContext.Authors.ForEach(author => authors.Add(new SelectListItem
+                    {
+                        Text = author.first_name + " " + author.last_name,
+                        Value = author.first_name + " " + author.last_name
+                    }));
+                }
+                ViewBag.Authors = authors;
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddBook(NewBookModel newBook)
+        {
+            if (Request.Form["ok"] != null)
+            {
+                var book = new Book
+                {
+                    book_name = newBook.book_name,
+                    available_count = newBook.available_count,
+                    price = newBook.price,
+                    description = newBook.description
+                };
+                try
+                {
+                    using (var dbContext = new Bookshop_DBContext())
+                    {
+                        book.author_id = dbContext.Authors
+                            .First(a => newBook.author_name.Equals(a.first_name + " " + a.last_name)).author_id;
+
+                        dbContext.Books.Add(book);
+                        dbContext.SaveChanges();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
+            return Redirect("Index");
         }
     }
 }

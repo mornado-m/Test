@@ -9,6 +9,7 @@
             <td><p>Name</p></td>
             <td><p>DOB</p></td>
             <td><p>Information</p></td>
+            <td></td>
         </tr>
         @foreach (var a in ViewBag.Authors)
         {
@@ -16,9 +17,13 @@
                 <td class="info"><a href="/Home/EditAuthor/@a.author_id" class="infoLink"><p>@a.first_name @a.last_name</p></a></td>
                 <td><p>@a.DOB.ToShortDateString()</p></td>
                 <td class="info"><p>@a.info</p></td>
+                <td><p><a href="/Home/DeleteAuthor/@a.author_id">Remove</a></p></td>
             </tr>
         }
     </table>
+    <form method="get" action="/Home/AddAuthor">
+        <input type="submit" value="Add new author"/>
+    </form>
     <p>@ViewBag.ErrorMessage</p>
 </div>
 
