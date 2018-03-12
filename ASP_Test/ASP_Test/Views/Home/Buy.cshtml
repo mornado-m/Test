@@ -3,10 +3,11 @@
     ViewBag.Title = "Buy";
 }
 
+@model ASP_Test.Models.BuyViewModel
 <div>
     <h3>Make a purchase</h3>
     <form method="post" action="">
-        <input type="hidden" value="@ViewBag.BookId" name="book_id" />
+        <input type="hidden" value="@Model.BookId" name="book_id" />
         <p>Input client name:</p>
         <input type="text" /><br /><br />
         <p>Input client address:</p>

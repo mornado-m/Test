@@ -3,21 +3,22 @@
     ViewBag.Title = "EditBook";
 }
 
+@model ASP_Test.Models.EditBookViewModel
 <div>
-    <h3>@ViewBag.BookName</h3>
+    <h3>@Model.Book.book_name</h3>
 
     <form method="post" action="..\EditBook">
-        <p>Author: @ViewBag.Author</p>
-        <input type="hidden" name="book_id" value="@ViewBag.BookId"/>
+        <p>Author: @Model.Book.Author.first_name @Model.Book.Author.last_name</p>
+        <input type="hidden" name="book_id" value="@Model.Book.book_id"/>
         
         <p>Available count:</p>
-        <input type="number" name="available_count" value="@ViewBag.Count" /><br/><br />
+        <input type="number" name="available_count" value="@Model.Book.available_count" /><br/><br />
 
         <p>Price:</p>
-        <input type="text" name="price" value="@ViewBag.Price" /><br/><br />
+        <input type="text" name="price" value="@Model.Book.price" /><br/><br />
 
         <p>Description:</p>
-        <textarea name="description" class="inputInfo">@ViewBag.Description</textarea><br /><br />
+        <textarea name="description" class="inputInfo">@Model.Book.description</textarea><br /><br />
 
         <input type="submit" name="ok" value="OK"/>
         <input type="submit" name="cancel" value="Cancel"/>

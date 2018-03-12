@@ -14,6 +14,19 @@ namespace ASP_Test.Models
     
     public partial class Sale
     {
+        public Sale Clone()
+        {
+            return new Sale
+            {
+                sale_id = this.sale_id,
+                book_id = this.book_id,
+                sale_date = this.sale_date,
+                books_count = this.books_count,
+                price = this.price,
+                Book = this.Book.Clone()
+            };
+        }
+
         public int sale_id { get; set; }
         public int book_id { get; set; }
         public System.DateTime sale_date { get; set; }

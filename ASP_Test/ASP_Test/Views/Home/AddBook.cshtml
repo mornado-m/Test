@@ -3,31 +3,33 @@
     ViewBag.Title = "AddBook";
 }
 
+@model ASP_Test.Models.AddBookViewModel
 <div>
     <h3>New Book</h3>
-
+    <p>@Model.ErrorMessage</p>
     <form method="post" action="">
-        <p>Name:</p>
-        <input type="text" name="book_name" /><br /><br />
+        @if (Model.ErrorMessage.Equals(""))
+        {
+            <p>Name:</p>
+            <input type="text" name="book_name" /><br /><br />
 
-        <p>Author:</p>
-        @model ASP_Test.Models.NewBookModel
-        @Html.DropDownListFor(newBook => newBook.author_name, new List<SelectListItem>(ViewBag.Authors))
-        
-        <br /><br />
-        <p>Available count:</p>
-        <input type="number" name="available_count" /><br/><br/>
+            <p>Author:</p>
+            @Html.DropDownList("author_name", Model.Authors)
 
-        <p>Price:</p>
-        <input type="text" name="price" /><br/><br/>
+            <br /><br />
+            <p>Available count:</p>
+            <input type="number" name="available_count" /><br /><br />
 
-        <p>Description:</p>
-        <textarea name="description" class="inputInfo"></textarea><br/><br/>
+            <p>Price:</p>
+            <input type="text" name="price" /><br /><br />
 
-        <input type="submit" name="ok" value="OK"/>
+            <p>Description:</p>
+            <textarea name="description" class="inputInfo"></textarea><br /><br />
+            <input type="submit" name="ok" value="OK" />
+        }
         <input type="submit" name="cancel" value="Cancel"/>
     </form>
-    <p>@ViewBag.ErrorMessage</p>
+    
 </div>
 
 

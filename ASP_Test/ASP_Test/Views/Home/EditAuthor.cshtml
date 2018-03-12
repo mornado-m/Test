@@ -3,12 +3,13 @@
     ViewBag.Title = "EditAuthor";
 }
 
+@model ASP_Test.Models.EditAuthorViewModel
 <div>
-    <h3>@ViewBag.AuthorName</h3>(@ViewBag.DOB.ToShortDateString()) <br/><br/>
+    <h3>@Model.Author.first_name @Model.Author.last_name</h3>(@Model.Author.DOB.Value.ToShortDateString()) <br/><br/>
     <p>Information:</p>
     <form method="post" action="..\EditAuthor">
-        <input type="hidden" name="author_id" value="@ViewBag.AuthorId"/>
-        <textarea name="info" class="inputInfo">@ViewBag.Info</textarea><br/><br/>
+        <input type="hidden" name="author_id" value="@Model.Author.author_id"/>
+        <textarea name="info" class="inputInfo">@Model.Author.info</textarea><br/><br/>
         <input type="submit" name="ok" value="OK"/>
         <input type="submit" name="cancel" value="Cancel"/>
     </form>

@@ -154,9 +154,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AddBookViewModel.cs" />
     <Compile Include="Models\Author.cs">
       <DependentUpon>BookshopDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthorsViewModel.cs" />
     <Compile Include="Models\Book.cs">
       <DependentUpon>BookshopDBModel.tt</DependentUpon>
     </Compile>
@@ -175,10 +177,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookshopDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\BuyViewModel.cs" />
+    <Compile Include="Models\ConfirmBuyViewModel.cs" />
+    <Compile Include="Models\ConfirmDeleteAuthorViewModel.cs" />
+    <Compile Include="Models\ConfirmDeleteBookViewModel.cs" />
+    <Compile Include="Models\EditAuthorViewModel.cs" />
+    <Compile Include="Models\EditBookViewModel.cs" />
+    <Compile Include="Models\IndexViewModel.cs" />
     <Compile Include="Models\NewBookModel.cs" />
     <Compile Include="Models\Sale.cs">
       <DependentUpon>BookshopDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

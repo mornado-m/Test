@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using WebGrease.Css.Extensions;
+
 namespace ASP_Test.Models
 {
     using System;
@@ -18,6 +20,18 @@ namespace ASP_Test.Models
         public Author()
         {
             this.Books = new HashSet<Book>();
+        }
+
+        public Author Clone()
+        {
+            return new Author
+            {
+                author_id = this.author_id,
+                first_name = this.first_name,
+                last_name = this.last_name,
+                DOB = this.DOB,
+                info = this.info
+            };
         }
     
         public int author_id { get; set; }

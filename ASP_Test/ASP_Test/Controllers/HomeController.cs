@@ -15,12 +15,12 @@ namespace ASP_Test.Controllers
     {
         public ActionResult Index()
         {
-            var books = new List<Book>();
+            var model = new IndexViewModel();
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    dbContext.Books.ForEach(book => books.Add(new Book
+                    dbContext.Books.ForEach(book => model.Books.Add(new Book
                     {
                         Author = new Author {first_name = book.Author.first_name, last_name = book.Author.last_name},
                         book_id = book.book_id,
@@ -32,24 +32,21 @@ namespace ASP_Test.Controllers
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                ViewBag.Books = new List<Book>();
-                return View();
+                model.ErrorMessage = e.Message;
+                return View(model);
             }
-
-            ViewBag.ErrorMessage = "";
-            ViewBag.Books = books;
-            return View();
+            
+            return View(model);
         }
 
         public ActionResult Sales()
         {
-            var sales = new List<Sale>();
+            var model = new SalesViewModel();
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    dbContext.Sales.ForEach(sale => sales.Add(new Sale
+                    dbContext.Sales.ForEach(sale => model.Sales.Add(new Sale
                     {
                         Book = new Book
                         {
@@ -68,24 +65,21 @@ namespace ASP_Test.Controllers
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                ViewBag.Sales = new List<Sale>();
-                return View();
+                model.ErrorMessage = e.Message;
+                return View(model);
             }
-
-            ViewBag.ErrorMessage = "";
-            ViewBag.Sales = sales;
-            return View();
+            
+            return View(model);
         }
 
         public ActionResult Authors()
         {
-            var authors = new List<Author>();
+            var model = new AuthorsViewModel();
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    dbContext.Authors.ForEach(author => authors.Add(new Author
+                    dbContext.Authors.ForEach(author => model.Authors.Add(new Author
                     {
                         author_id = author.author_id,
                         first_name = author.first_name,
@@ -97,26 +91,23 @@ namespace ASP_Test.Controllers
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                ViewBag.Authors = new List<Author>();
-                return View();
+                model.ErrorMessage = e.Message;
+                return View(model);
             }
-
-            ViewBag.ErrorMessage = "";
-            ViewBag.Authors = authors;
-            return View();
+            
+            return View(model);
         }
-
+        
         [HttpGet]
         public ActionResult Buy(int id)
         {
-            ViewBag.BookId = id;
-            return View();
+            return View(new BuyViewModel {BookId = id});
         }
 
         [HttpPost]
         public ActionResult Buy(Sale sale)
         {
+            var model = new ConfirmBuyViewModel();
             sale.sale_date = DateTime.Now;
 
             try
@@ -126,29 +117,24 @@ namespace ASP_Test.Controllers
                     var bk = dbContext.Books.First(book => book.book_id == sale.book_id);
                     sale.price = bk.price * sale.books_count;
 
-                    ViewBag.BookName = bk.book_name;
+                    model.BookName = bk.book_name;
 
                     if (bk.available_count < sale.books_count || sale.books_count < 1)
                     {
-                        ViewBag.ErrorMessage = "Sorry, we haven't enough books. Please, try later.";
-                        return View("ConfirmBuy");
+                        model.ErrorMessage = "Sorry, we haven't enough books. Please, try later.";
+                        return View("ConfirmBuy", model);
                     }
                 }
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                return View("ConfirmBuy");
-            }
-            catch (NullReferenceException e)
-            {
-                ViewBag.ErrorMessage = "Error. Can't find book";
-                return View("ConfirmBuy");
+                model.ErrorMessage = e.Message;
+                return View("ConfirmBuy", model);
             }
 
-            ViewBag.Sale = sale;
-            ViewBag.ErrorMessage = "";
-            return View("ConfirmBuy");
+            model.Sale = sale;
+            model.ErrorMessage = "";
+            return View("ConfirmBuy", model);
         }
 
 
@@ -180,17 +166,12 @@ namespace ASP_Test.Controllers
 
         public ActionResult EditBook(int id)
         {
-            ViewBag.BookId = id;
+            var model = new EditBookViewModel();
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    var book = dbContext.Books.First(b => b.book_id == id);
-                    ViewBag.BookName = book.book_name;
-                    ViewBag.Author = book.Author.first_name + " " + book.Author.last_name;
-                    ViewBag.Count = book.available_count;
-                    ViewBag.Price = book.price;
-                    ViewBag.Description = book.description;
+                    model.Book = dbContext.Books.First(b => b.book_id == id).Clone();
                 }
             }
             catch (SqlException e)
@@ -199,7 +180,7 @@ namespace ASP_Test.Controllers
                 throw;
             }
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -223,15 +204,12 @@ namespace ASP_Test.Controllers
 
         public ActionResult EditAuthor(int id)
         {
-            ViewBag.AuthorId = id;
+            var model = new EditAuthorViewModel();
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    var author = dbContext.Authors.First(a => a.author_id == id);
-                    ViewBag.AuthorName = author.first_name + " " + author.last_name;
-                    ViewBag.DOB = author.DOB;
-                    ViewBag.Info = author.info;
+                    model.Author = dbContext.Authors.First(a => a.author_id == id).Clone();
                 }
             }
             catch (SqlException e)
@@ -240,7 +218,7 @@ namespace ASP_Test.Controllers
                 throw;
             }
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -267,26 +245,26 @@ namespace ASP_Test.Controllers
             return Redirect("Authors");
         }
 
+
         [HttpGet]
         public ActionResult DeleteBook(int id)
         {
-            ViewBag.BookId = id;
+            var model = new ConfirmDeleteBookViewModel {BookId = id};
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
                     var book = dbContext.Books.First(b => b.book_id == id);
-                    ViewBag.BookName = book.book_name;
+                    model.BookName = book.book_name;
                 }
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                return View("ConfirmDeleteBook");
+                model.ErrorMessage = e.Message;
+                return View("ConfirmDeleteBook", model);
             }
-
-            ViewBag.ErrorMessage = "";
-            return View("ConfirmDeleteBook");
+            
+            return View("ConfirmDeleteBook", model);
         }
 
         [HttpPost]
@@ -322,23 +300,22 @@ namespace ASP_Test.Controllers
         [HttpGet]
         public ActionResult DeleteAuthor(int id)
         {
-            ViewBag.AuthorId = id;
+            var model = new ConfirmDeleteAuthorViewModel {AuthorId = id};
             try
             {
                 using (var dbContext = new Bookshop_DBContext())
                 {
                     var author = dbContext.Authors.First(a => a.author_id == id);
-                    ViewBag.AuthorName = author.first_name + " " + author.last_name;
+                    model.AuthorName = author.first_name + " " + author.last_name;
                 }
             }
             catch (SqlException e)
             {
-                ViewBag.ErrorMessage = e.Message;
-                return View("ConfirmDeleteAuthor");
+                model.ErrorMessage = e.Message;
+                return View("ConfirmDeleteAuthor", model);
             }
-
-            ViewBag.ErrorMessage = "";
-            return View("ConfirmDeleteAuthor");
+            
+            return View("ConfirmDeleteAuthor", model);
         }
 
         [HttpPost]
@@ -405,26 +382,25 @@ namespace ASP_Test.Controllers
 
         public ActionResult AddBook()
         {
+            var model = new AddBookViewModel();
             try
             {
-                var authors = new List<SelectListItem>();
                 using (var dbContext = new Bookshop_DBContext())
                 {
-                    dbContext.Authors.ForEach(author => authors.Add(new SelectListItem
+                    dbContext.Authors.ForEach(author => model.Authors.Add(new SelectListItem
                     {
                         Text = author.first_name + " " + author.last_name,
                         Value = author.first_name + " " + author.last_name
                     }));
                 }
-                ViewBag.Authors = authors;
             }
             catch (SqlException e)
             {
-                Console.WriteLine(e);
-                throw;
+                model.ErrorMessage = e.Message;
+                return View(model);
             }
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]

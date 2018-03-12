@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
- 
+@model ASP_Test.Models.IndexViewModel
 <div>
     <h3>Available books</h3>
     <table>
@@ -12,7 +12,7 @@
             <td></td>
             <td></td>
         </tr>
-        @foreach (var b in ViewBag.Books)
+        @foreach (var b in @Model.Books)
         {
             <tr>
                 <td class="info"><p><a href="/Home/EditBook/@b.book_id" class="infoLink">@b.book_name</a></p></td>
@@ -27,5 +27,5 @@
     <form method="get" action="/Home/AddBook">
         <input type="submit" value="Add new book" />
     </form>
-    <p>@ViewBag.ErrorMessage</p>
+    <p>@Model.ErrorMessage</p>
 </div>
