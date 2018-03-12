@@ -22,3 +22,32 @@ select,
 textarea {
     max-width: 280px;
 }
+
+table {
+    text-align: center;
+}
+
+td {
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.info {
+    text-align: left;
+}
+
+.infoLink {
+    text-decoration: none;
+    color: black;
+}
+
+.infoLink:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.inputInfo {
+    width: 500px;
+    height: 200px;
+    word-wrap: break-word;
+}

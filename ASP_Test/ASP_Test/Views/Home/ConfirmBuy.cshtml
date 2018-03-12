@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Confirm purchase";
+}
+
+@model ASP_Test.Models.ConfirmBuyViewModel
+<div>
+    <h3>Confirm purchase</h3>
+    <p>@Model.ErrorMessage</p>
+    <form method="post" action="..\Confirm">
+        @if (Model.ErrorMessage.Equals(""))
+        {
+            <input type="hidden" value="@Model.Sale.book_id" name="book_id"/>
+            <input type="hidden" value="@Model.Sale.sale_date" name="sale_date" />
+            <input type="hidden" value="@Model.Sale.books_count" name="books_count" />
+            <input type="hidden" value="@Model.Sale.price" name="price" />
+            <p>Your order: @Model.Sale.books_count * @Model.BookName, will be delivered in around 1 week.</p>
+            <input type="submit" name="ok" value="OK"/>
+            <input type="submit" name="cancel" value="Cancel"/>
+        }
+    </form>
+</div>
+
+

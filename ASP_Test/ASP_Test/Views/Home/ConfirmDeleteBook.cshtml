@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmDeleteBook";
+}
+
+@model ASP_Test.Models.ConfirmDeleteBookViewModel
+<div>
+    <h3>Remove this book?</h3>
+    <p>@Model.ErrorMessage</p>
+    <form method="post" action="..\ConfirmDeleteBook">
+        @if (Model.ErrorMessage.Equals(""))
+        {
+            <input type="hidden" value="@Model.BookId" name="id" />
+            <p>Do you want to remove @Model.BookName, and all book's sales?</p>
+            <input type="submit" name="ok" value="OK" />
+            <input type="submit" name="cancel" value="Cancel" />
+        }
+    </form>
+</div>
+

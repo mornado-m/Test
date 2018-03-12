@@ -1,31 +1,31 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+@model ASP_Test.Models.IndexViewModel
+<div>
+    <h3>Available books</h3>
+    <table>
+        <tr><td><p>Book name</p></td>
+            <td><p>Author</p></td>
+            <td><p>Available Count</p></td>
+            <td><p>Price</p></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var b in @Model.Books)
+        {
+            <tr>
+                <td class="info"><p><a href="/Home/EditBook/@b.book_id" class="infoLink">@b.book_name</a></p></td>
+                <td class="info"><p>@b.Author.first_name @b.Author.last_name</p></td>
+                <td><p>@b.available_count</p></td>
+                <td><p>@b.price</p></td>
+                <td><p><a href="/Home/Buy/@b.book_id">Make a purchase</a></p></td>
+                <td><p><a href="/Home/DeleteBook/@b.book_id">Remove</a></p></td>
+            </tr>
+        }
+    </table>
+    <form method="get" action="/Home/AddBook">
+        <input type="submit" value="Add new book" />
+    </form>
+    <p>@Model.ErrorMessage</p>
 </div>

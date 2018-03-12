@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+}
+
+@model ASP_Test.Models.SalesViewModel
+<div>
+    <h3>Sales</h3>
+    <table>
+        <tr>
+            <td><p>Book name</p></td>
+            <td><p>Author</p></td>
+            <td><p>Count</p></td>
+            <td><p>Price</p></td>
+            <td><p>Date</p></td>
+        </tr>
+        @foreach (var s in @Model.Sales)
+        {
+            <tr>
+                <td class="info"><p>@s.Book.book_name</p></td>
+                <td class="info"><p>@s.Book.Author.first_name @s.Book.Author.last_name</p></td>
+                <td><p>@s.books_count</p></td>
+                <td><p>@s.price</p></td>
+                <td><p>@s.sale_date.ToShortDateString()</p></td>
+            </tr>
+        }
+    </table>
+    <p>@Model.ErrorMessage</p>
+</div>
